@@ -1,45 +1,95 @@
 # Resolve — AI Ticket Assistant
 
-A small AI-assisted customer-support triage MVP built with ASP.NET Core 10, vanilla JavaScript, and the Google Gemini API.
+An AI-powered customer support ticket triage MVP built with ASP.NET Core 10, vanilla JavaScript, and the Google Gemini API.
+
+Resolve analyzes incoming customer support messages and helps support teams understand, prioritize, and respond to customer requests.
 
 ## Features
-- Classifies tickets into Billing, Technical, Account, Delivery, or Other.
-- Assigns Low, Medium, High, or Critical priority.
-- Produces a concise summary, a suggested response draft, and missing-information questions.
-- Requests JSON output from Gemini and validates returned values on the server.
-- Handles missing configuration, API errors, quota limits, and timeouts.
-- Keeps the API key on the server; it is never sent to the browser.
+
+- **Ticket classification** — categorizes requests as Billing, Technical, Account, Delivery, or Other.
+- **Priority assessment** — assigns Low, Medium, High, or Critical priority.
+- **Ticket summary** — generates a concise summary of the customer's issue.
+- **Suggested response** — drafts a response that a support agent can review and edit.
+- **Missing information detection** — identifies additional information that may be needed.
+- **Structured AI output** — requests JSON responses from Gemini and validates the returned values on the server.
+- **Error handling** — handles missing configuration, API errors, quota limits, and timeouts.
+
+The Gemini API key is stored on the server and is never exposed to the browser.
+
+## Tech Stack
+
+- C# / ASP.NET Core 10
+- Vanilla JavaScript
+- HTML / CSS
+- Google Gemini API
 
 ## Requirements
+
 - .NET 10 SDK
 - A Gemini API key from [Google AI Studio](https://aistudio.google.com/apikey)
 
-## Run locally
+## Getting Started
 
-Open PowerShell in the project folder:
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/AlexAsura/ai-ticket-assistant.git
+cd ai-ticket-assistant
+```
+
+### 2. Configure the API key
+
+Set your Gemini API key as an environment variable.
+
+**PowerShell:**
 
 ```powershell
 $env:GEMINI_API_KEY="your-gemini-api-key"
-$env:GEMINI_MODEL="gemini-2.5-flash"
-dotnet run --urls http://localhost:5000
 ```
 
-Open http://localhost:5000.
+Do not commit your API key or share it publicly.
 
-The default model is `gemini-2.5-flash`. You can override it with `GEMINI_MODEL`.
+### 3. Run the application
+
+```powershell
+dotnet run --urls "http://localhost:5000"
+```
+
+Open [http://localhost:5000](http://localhost:5000) in your browser.
+
+The application uses the `gemini-flash-lite-latest` model.
 
 ## API
 
-`POST /api/analyze`
+### `POST /api/analyze`
+
+Analyzes a customer support message.
+
+Example request:
 
 ```json
-{ "message": "I was charged twice for my subscription." }
+{
+  "message": "I was charged twice for my subscription."
+}
 ```
 
-`GET /api/health` returns service status and provider name.
+### `GET /api/health`
 
-## Privacy and limitations
+Returns the service status and AI provider information.
 
-This is a demo, not a production support system. AI output can be inaccurate; a human must review suggested replies. No customer data is persisted. Use synthetic/example ticket text only in the free Gemini tier, and do not submit real customer personal or payment information. Google's free-tier data-use terms may differ from paid-tier terms; review the current [Gemini API pricing and terms](https://ai.google.dev/gemini-api/docs/pricing) before using real data.
+## Privacy and Limitations
 
-Before production use, add authentication, rate limiting, privacy controls, structured logging, retries, and automated tests.
+Resolve is a demonstration MVP, not a production-ready customer support system.
+
+- AI-generated classifications and responses may be inaccurate and should always be reviewed by a human.
+- Customer data is not persisted.
+- Use synthetic or example ticket text when testing with the free Gemini tier.
+- Do not submit real customer personal information or payment details.
+
+Google's free-tier data-use terms may differ from paid-tier terms. Review the current [Gemini API pricing and terms](https://ai.google.dev/gemini-api/docs/pricing) before using real data.
+
+Before production use, the application would need additional features such as authentication, rate limiting, privacy controls, structured logging, and automated tests.
+
+## Project Status
+
+This project is an MVP developed as a practical demonstration of integrating an LLM API into a backend application.
